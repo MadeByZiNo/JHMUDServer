@@ -8,9 +8,9 @@
 using namespace std;
 
 
-	User::User(char _nickname[])
+	User::User(string _nickname)
 	{
-		strcpy(nickname,_nickname);
+		nickname.replace(0,_nickname.size(),_nickname);
 		x = rand() % 30;
 		y = rand() % 30;
 		hp = 30;
@@ -18,9 +18,9 @@ using namespace std;
 		numOfHpPotion = 1;
 		numOfStrPotion = 1;
 	}
-	User::User(char _nickname[], int _x, int _y, int _hp, int _str, int _numOfHpPotion, int _numOfStrPotion)
+	User::User(string _nickname, int _x, int _y, int _hp, int _str, int _numOfHpPotion, int _numOfStrPotion)
 	{
-		strcpy(nickname, _nickname);
+		nickname.replace(0, _nickname.size(), _nickname);
 		x = _x;
 		y = _y;
 		hp = _hp;
@@ -28,28 +28,21 @@ using namespace std;
 		numOfHpPotion = _numOfHpPotion;
 		numOfStrPotion = _numOfStrPotion;
 	}
-	User::~User(){}
+	User::~User() {  }
 
 
 
-	void User::Move(int _x, int _y)
+	bool User::Move(int _x, int _y)
 	{
-		if (_x > 3 || _x < -3 || _y > 3  ||_y < -3)
+		if (x + _x > 29 || x + _x < 0 || y + _y > 29 || y + _y < 0)
 		{
-			printf("\n\n-3 ~ 3 사이의 값만 이동할 수 있습니다");
-			Sleep(1500);
-		}
-		else if (x + _x > 29 || x + _x < 0 || y + _y > 29 || y + _y < 0)
-		{
-			printf("\n\n던전 범위를 넘어갈 수 없습니다.");
-			Sleep(1500);
+			return false;
 		}
 		else
 		{
 			x += _x;
 			y += _y;
-			std::cout << "\n\n 이동 후 좌표 : (" << x << "," << y << ")" << std::endl;
-			Sleep(1500);
+			return true;
 		}
 	}
 
@@ -70,33 +63,22 @@ using namespace std;
 		}
 	}
 
-	void User::UserDamaged(int _damage)
+	bool User::UserDamaged(int _damage)  //데미지 입을시 true 사망시 false
 	{
 		hp -= _damage;
-		if (hp < 0)
+		if (hp <= 0)
 		{
-			std::cout<<"\n\n캐릭터 사망 게임 종료"<<endl;
-			delete this;
-			exit(1);
+			return false;
 		}
+		return true;
 	}
 
 
 
-void User::PrintUserLocation()
-{
-	std::cout << "\n\n닉네임 : " << nickname << "의 좌표 : (" << x << "," << y << ")" << std::endl;
-}
-const char* User::PrintUserInformation()
-{
-	char c[10000];
-	sprintf(c,"닉네임 : %s  HP : %d  STR : %d  x : %d  y : %d  HpPotion : %d  StrPotion : %d\n\0",nickname,hp,str,x,y,numOfHpPotion,numOfStrPotion);
-	return c;
-}
 int User::getX() { return x; }
 int User::getY() { return y; }
 int User::getHp() { return hp; }
 int User::getStr() { return str; }
 int User::getNumOfHpPotion() { return numOfHpPotion; }
 int User::getNumOfStrPotion() { return numOfStrPotion; }
-const char* User::getNickname() { return nickname; }
+string User::getNickname() { return nickname; }

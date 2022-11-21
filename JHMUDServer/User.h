@@ -5,7 +5,7 @@ class Slime;
 class User
 {
 private:
-	char nickname[100];
+	string nickname;
 	int x;
 	int y;
 	int hp;
@@ -13,18 +13,16 @@ private:
 	int numOfHpPotion;
 	int numOfStrPotion;
 public:
-	User(char _nickname[]);
-	User(char _nickname[],int _x,int _y,int _hp,int _str, int _numOfHpPotion,int _numOfStrPotion);
+	User(string _nickname);
+	User(string _nickname,int _x,int _y,int _hp,int _str, int _numOfHpPotion,int _numOfStrPotion);
 	~User();
 
-	void PrintUserLocation();
-	void Move(int _x, int _y);
-	void Attack(list<Slime*> slimes);
-	void UserDamaged(int _damage);
-	
-	const char* PrintUserInformation();
 
-	const char* getNickname();
+	bool Move(int _x, int _y);
+	void Attack(list<Slime*> slimes);
+	bool UserDamaged(int _damage);
+
+	string getNickname();
 	int getHp();
 	int getStr();
 	int getNumOfHpPotion();

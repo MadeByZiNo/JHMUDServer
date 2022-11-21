@@ -17,15 +17,13 @@ Slime::Slime()
 	str = rand() % 3 + 3;
 	dropItem = rand() % 3;
 }
-void Slime::Attack(User* user)
+bool Slime::Attack(int ux,int uy)		//범위 안에있을 시 true 없을시 false
 {
-		int ux = user->getX();
-		int uy = user->getY();
 		if ((ux >= x - 1) && (ux <= x + 1) && (uy >= y - 1) && (uy <= y + 1))
 		{
-			std::cout << "\n\n슬라임의 공격! " << str << "의 데미지를 받았다!" << std::endl;
-			user->UserDamaged(str);
+			return true;
 		}
+		return false;
 }
 int Slime::SlimeDamaged(int _damage,string _nickname)
 {
@@ -43,3 +41,4 @@ int Slime::SlimeDamaged(int _damage,string _nickname)
 }
 int Slime::getX() { return x; }
 int Slime::getY() { return y; }
+int Slime::getStr() { return str; }
